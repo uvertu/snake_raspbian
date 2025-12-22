@@ -1,4 +1,5 @@
 import pygame
+import random
 
 # Инициализация Pygame
 pygame.init()
@@ -76,3 +77,13 @@ class Snake:
     def grow(self):
         self.length += 1
         self.score += 10
+
+#Класс Еда
+class Food:
+    def __init__(self):
+        self.position = (0, 0)
+        self.randomize_position()
+
+    def randomize_position(self):
+        self.position = (random.randint(0, GRID_WIDTH - 1),
+                         random.randint(0, GRID_HEIGHT - 1))
