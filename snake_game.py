@@ -28,3 +28,51 @@ UP = (0, -1)
 DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
+
+#Класс Змейка
+class Snake:
+    def __init__(self):
+        self.reset()
+
+    def reset(self):
+        self.length = 3
+        self.positions = [(GRID_WIDTH // 2, GRID_HEIGHT // 2)]
+        self.direction = RIGHT
+        self.score = 0
+        # Создаем начальное тело змейки
+        for i in range(1, self.length):
+            self.positions.append((self.positions[0][0] - i, self.positions[0][1]))
+        self.alive = True
+
+    def get_head_position(self):
+        return self.positions[0]
+
+    def turn(self, new_direction):
+        # Запрещен разворот на 180 градусов
+        if (new_direction[0] * -1, new_direction[1] * -1) != self.direction:
+            self.direction = new_direction
+
+    def move(self):
+        if not self.alive:
+            return False
+
+        head = self.get_head_position()
+        x, y = self.direction
+        new_x = (head[0] + x) % GRID_WIDTH
+        new_y = (head[1] + y) % GRID_HEIGHT
+        new_position = (new_x, new_y)
+
+        # Проверка на столкновение с собой
+        if new_position in self.positions[1:]:
+            self.alive = False
+            return False
+
+        self.positions.insert(0, new_position)
+        if len(self.positions) > self.length:
+            self.positions.pop()
+
+        return True
+
+    def grow(self):
+        self.length += 1
+        self.score += 10
