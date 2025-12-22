@@ -78,6 +78,16 @@ class Snake:
         self.length += 1
         self.score += 10
 
+    def draw(self, surface):
+        for i, p in enumerate(self.positions):
+            if not self.alive:
+                color = RED if i == 0 else RED
+            else:
+                color = GREEN if i == 0 else BLUE
+            rect = pygame.Rect((p[0] * GRID_SIZE, p[1] * GRID_SIZE), (GRID_SIZE, GRID_SIZE))
+            pygame.draw.rect(surface, color, rect)
+            pygame.draw.rect(surface, BLACK, rect, 1)
+
 #Класс Еда
 class Food:
     def __init__(self):
@@ -87,3 +97,40 @@ class Food:
     def randomize_position(self):
         self.position = (random.randint(0, GRID_WIDTH - 1),
                          random.randint(0, GRID_HEIGHT - 1))
+
+    def draw(self, surface):
+        rect = pygame.Rect((self.position[0] * GRID_SIZE, self.position[1] * GRID_SIZE),
+                           (GRID_SIZE, GRID_SIZE))
+        pygame.draw.rect(surface, RED, rect)
+        pygame.draw.rect(surface, BLACK, rect, 1)
+
+#Отрисовка игры
+def draw_grid(surface):
+    for y in range(0, HEIGHT, GRID_SIZE):
+        for x in range(0, WIDTH, GRID_SIZE):
+            rect = pygame.Rect((x, y), (GRID_SIZE, GRID_SIZE))
+            pygame.draw.rect(surface, GRAY, rect, 1)
+
+
+def draw_score(surface, score, game_over=False):
+    font = pygame.font.SysFont('arial', 25)
+    if game_over:
+        color = RED
+        text = font.render(f'Последний счет: {score}', True, color)
+    else:
+        color = WHITE
+        text = font.render(f'Счет: {score}', True, color)
+    surface.blit(text, (5, 5))
+
+
+def draw_game_over(surface, score):
+    font_large = pygame.font.SysFont('arial', 50)
+    font_small = pygame.font.SysFont('arial', 30)
+
+    game_over = font_large.render('ИГРА ОКОНЧЕНА', True, RED)
+    score_text = font_small.render(f'Ваш счет: {score}', True, WHITE)
+    restart_text = font_small.render('Нажмите R для рестарта', True, WHITE)
+
+    surface.blit(game_over, (WIDTH // 2 - game_over.get_width() // 2, HEIGHT // 2 - 60))
+    surface.blit(score_text, (WIDTH // 2 - score_text.get_width() // 2, HEIGHT // 2))
+    surface.blit(restart_text, (WIDTH // 2 - restart_text.get_width() // 2, HEIGHT // 2 + 40))
