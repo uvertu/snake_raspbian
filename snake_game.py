@@ -1,5 +1,6 @@
 import pygame
 import random
+import sys
 
 # Инициализация Pygame
 pygame.init()
@@ -134,3 +135,67 @@ def draw_game_over(surface, score):
     surface.blit(game_over, (WIDTH // 2 - game_over.get_width() // 2, HEIGHT // 2 - 60))
     surface.blit(score_text, (WIDTH // 2 - score_text.get_width() // 2, HEIGHT // 2))
     surface.blit(restart_text, (WIDTH // 2 - restart_text.get_width() // 2, HEIGHT // 2 + 40))
+
+
+def main():
+    snake = Snake()
+    food = Food()
+    game_over = False
+    final_score = 0  #Хранение финального счета
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.KEYDOWN:
+                if game_over:
+                    if event.key == pygame.K_r:
+                        snake.reset()
+                        food.randomize_position()
+                        game_over = False
+                        final_score = 0
+                else:
+                    if event.key == pygame.K_UP or event.key == pygame.K_w:
+                        snake.turn(UP)
+                    elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                        snake.turn(DOWN)
+                    elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                        snake.turn(LEFT)
+                    elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                        snake.turn(RIGHT)
+
+        if not game_over:
+            # Движение змейки
+            if not snake.move():
+                game_over = True
+                final_score = snake.score  # Сохранение счета при проигрыше
+
+            # Проверка на съедание еды
+            if snake.get_head_position() == food.position:
+                snake.grow()
+                food.randomize_position()
+                # Проверка, что еда не появилась в теле змейки
+                while food.position in snake.positions:
+                    food.randomize_position()
+
+        # Отрисовка
+        screen.fill(BLACK)
+        draw_grid(screen)
+        snake.draw(screen)
+        if not game_over:  # Показывать еду только если игра не окончена
+            food.draw(screen)
+
+        if game_over:
+            draw_score(screen, final_score, game_over=True)
+            draw_game_over(screen, final_score)
+        else:
+            draw_score(screen, snake.score)
+
+        pygame.display.update()
+        clock.tick(FPS)
+
+
+if __name__ == "__main__":
+    main()
