@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1a1a1a"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/button_new_game"
         android:layout_width="324dp"
         android:layout_height="70dp"
-        android:text="НОВАЯ ИГРА"
-        android:textSize="34sp"
+        android:backgroundTint="#4CAF50"
+        android:text="ПОДКЛЮЧИТЬСЯ"
+        android:textColor="#FFFFFF"
+        android:textSize="32sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,8 +27,11 @@
         android:id="@+id/button_pause"
         android:layout_width="324dp"
         android:layout_height="70dp"
+        android:backgroundTint="#FF9800"
         android:text="ПАУЗА"
+        android:textColor="#FFFFFF"
         android:textSize="34sp"
+        android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,6 +41,8 @@
         android:id="@+id/controls_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#2d2d2d"
+        android:padding="20dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,9 +51,11 @@
 
         <Button
             android:id="@+id/button_up"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:backgroundTint="#2196F3"
             android:text="↑"
+            android:textColor="#FFFFFF"
             android:textSize="34sp"
             app:layout_constraintBottom_toTopOf="@id/button_down"
             app:layout_constraintEnd_toEndOf="parent"
@@ -52,9 +64,11 @@
 
         <Button
             android:id="@+id/button_down"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:backgroundTint="#2196F3"
             android:text="↓"
+            android:textColor="#FFFFFF"
             android:textSize="34sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -63,10 +77,12 @@
 
         <Button
             android:id="@+id/button_left"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginEnd="20dp"
+            android:backgroundTint="#2196F3"
             android:text="←"
+            android:textColor="#FFFFFF"
             android:textSize="34sp"
             app:layout_constraintBottom_toBottomOf="@id/button_down"
             app:layout_constraintEnd_toStartOf="@id/button_up"
@@ -74,15 +90,31 @@
 
         <Button
             android:id="@+id/button_right"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginStart="20dp"
+            android:backgroundTint="#2196F3"
             android:text="→"
+            android:textColor="#FFFFFF"
             android:textSize="34sp"
             app:layout_constraintBottom_toBottomOf="@id/button_down"
             app:layout_constraintStart_toEndOf="@id/button_up"
             app:layout_constraintTop_toTopOf="@id/button_down" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <EditText
+        android:id="@+id/editTextText2"
+        android:layout_width="273dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="292dp"
+        android:ems="10"
+        android:hint="Введите адрес устройства"
+        android:inputType="text"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#857A7A"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
