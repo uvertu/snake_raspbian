@@ -19,6 +19,9 @@ import java.net.Socket;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.view.inputmethod.InputMethodManager;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button buttonNewGame;
@@ -112,7 +115,15 @@ public class MainActivity extends AppCompatActivity {
         buttonRight.setOnClickListener(v -> sendCommand("RIGHT"));
     }
 
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
     private void connectToServer() {
+        hideKeyboard();
         networkThread = new Thread(() -> {
             try {
                 socket = new Socket(textAddress.getText().toString(), serverPort);
